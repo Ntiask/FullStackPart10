@@ -53,8 +53,8 @@ const cardBodyStyles = StyleSheet.create({
   }
 });
 
+// eslint-disable-next-line no-unused-vars
 const CardBody = ({props}) => {
-  console.log(props)
   return (
     <View style={cardBodyStyles.container}>
     </View>

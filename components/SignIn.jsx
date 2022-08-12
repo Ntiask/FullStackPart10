@@ -3,6 +3,9 @@ import { Formik } from 'formik';
 import FormikTextInput from './FormikTextInput';
 import { Button } from 'react-native-web';
 import * as yup from 'yup'
+import useSignIn  from '../hooks/useSignIn';
+import { useNavigate } from 'react-router-dom';
+
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -19,11 +22,11 @@ const initialValues = {
 };
 
 const LoginForm = ({ onSubmit }) => {
+
     return (
       <View >
         <View style={{
         }}>
-
         <FormikTextInput name="username" placeholder="Username" />
         </View>
         <View style={{}}>
@@ -35,13 +38,22 @@ const LoginForm = ({ onSubmit }) => {
   };
 
 const Login = () => {
-    const onSubmit = values => {
+    const navigate = useNavigate()
+    const [signIn] = useSignIn();
+    const onSubmit = async (values) => {
     const username = values.username;
     const password = values.password;
 
-    if (username === "Niko" && password === "pr2jk") {
-      console.log('Login successful')
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const result = await signIn({ username, password });
+      console.log('Log in Succesful, Access Token: ', result.data.authenticate.accessToken)
+      navigate("/")
+      
+    } catch (e) {
+      console.log(e);
     }
+
   };
 
   return (
